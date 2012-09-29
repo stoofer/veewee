@@ -24,7 +24,7 @@ wget http://downloads.sourceforge.net/sevenzip/7z922-x64.msi
 msiexec /qb /i 7z922-x64.msi
 
 # Download Virtualbox Additions
-VBOX_VERSION="4.1.8" #"4.0.8"
+VBOX_VERSION="4.1.22" #"4.1.22"
 wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
 
 # Extract the installer from the ISO (WHY WHY WHY isn't this available not bundled within an ISO)
@@ -49,12 +49,13 @@ msiexec /qb /i chef-client-latest.msi
 #Making aliases
 cat <<EOF > /home/vagrant/.bash_profile
 alias chef-client="chef-client.bat"
+alias chef-solo="chef-solo.bat"
 alias gem="gem.bat"
 alias ruby="ruby.exe"
 alias puppet="puppet.bat"
 alias ohai="ohai.bat"
 alias irb="irb.bat"
-alias facter="facter.bat" 
+alias facter="facter.bat"
 EOF
 
 
@@ -65,10 +66,9 @@ EOF
 chmod 755 /bin/sudo
 
 # Mounting a directory
-net.exe use  '\\vboxsvr\veewee-validation'
+net.exe use  V: \\\\vboxsvr\\veewee-validation /PERSISTENT:YES
 
 
 # Reboot
 # http://www.techrepublic.com/blog/datacenter/restart-windows-server-2003-from-the-command-line/245
-shutdown.exe /s /t 0 /d p:2:4 /c "Vagrant initial reboot"
-
+shutdown.exe /r /t 0 /d p:2:4 /c "Vagrant initial reboot"
